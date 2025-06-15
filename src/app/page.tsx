@@ -47,12 +47,12 @@ export default function Home() {
           />
         </div>
         <div className="hidden lg:flex w-full justify-between gap-4 order-1">
-          <Cta />
           <CompanionList
             title="Recently completed Sessions"
             companions={recentSessions}
             className="w-2/3 max-lg:w-full"
           />
+          <Cta />
         </div>
       </section>
     </main>
