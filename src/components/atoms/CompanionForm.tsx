@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/select";
 import { subjects } from "@/constants";
 import { Textarea } from "../ui/textarea";
+import { createCompanion } from "@/lib/actions/campanion.actions";
+import { redirect } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Companion is required" }),
@@ -33,7 +35,7 @@ const formSchema = z.object({
 });
 
 const CompanionForm = () => {
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -45,8 +47,15 @@ const CompanionForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Form submitted with values:", values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const companion = await createCompanion(values);
+
+    if (companion) {
+      redirect(`/companions/${companion.id}`);
+    } else {
+      console.log("Failed to create a companion");
+      redirect("/");
+    }
   };
 
   return (
@@ -208,7 +217,7 @@ const CompanionForm = () => {
           )}
         />
         <Button
-          className="bg-black text-white w-full cursor-pointer"
+          className="bg-black text-white hover:bg-black w-full cursor-pointer"
           type="submit"
         >
           Build Your Companion
