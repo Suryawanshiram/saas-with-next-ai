@@ -44,7 +44,7 @@ const CompanionCard = ({
           unoptimized
           className="bg-white rounded-full p-1"
         />
-        <span className="text-sm text-white">{duration} minutes</span>
+        <span className="text-sm dark:text-white">{duration} minutes</span>
       </div>
       <Link href={`/companions/${id}`} className="w-full">
         <button className="btn-primary bg-black w-full justify-center">
